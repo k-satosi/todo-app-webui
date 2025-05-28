@@ -66,40 +66,7 @@ function App() {
     try {
       console.log('Date string before parsing:', newTaskDueDate);
       
-      if (newTaskDueDate.includes('/')) {
-        const parts = newTaskDueDate.split('/');
-        if (parts.length === 3 && parseInt(parts[0]) <= 12) {
-          const month = parseInt(parts[0]) - 1;
-          const day = parseInt(parts[1]);
-          const year = parseInt(parts[2]);
-          console.log('Date parts (MM/DD/YYYY):', { year, month, day });
-          dueDate = new Date(year, month, day);
-        } else {
-          dueDate = new Date(newTaskDueDate);
-        }
-      } else if (newTaskDueDate.includes('-')) {
-        const parts = newTaskDueDate.split('-');
-        if (parts.length === 3) {
-          const yearNum = parseInt(parts[0]);
-          if (yearNum >= 1900 && yearNum <= 2100) {
-            const year = yearNum;
-            const month = parseInt(parts[1]) - 1;
-            const day = parseInt(parts[2]);
-            console.log('Date parts (YYYY-MM-DD):', { year, month, day });
-            dueDate = new Date(year, month, day);
-          } else {
-            const day = parseInt(parts[0]);
-            const month = parseInt(parts[1]) - 1;
-            const year = parseInt(parts[2]);
-            console.log('Date parts (rearranged):', { year, month, day });
-            dueDate = new Date(year, month, day);
-          }
-        } else {
-          dueDate = new Date(newTaskDueDate);
-        }
-      } else {
-        dueDate = new Date(newTaskDueDate);
-      }
+      dueDate = new Date(newTaskDueDate + 'T00:00:00');
       
       console.log('Parsed date:', dueDate);
       
@@ -233,8 +200,7 @@ function App() {
                 <Label htmlFor="dueDate">期日</Label>
                 <Input
                   id="dueDate"
-                  type="text" 
-                  placeholder="YYYY-MM-DD"
+                  type="date" 
                   value={newTaskDueDate}
                   onChange={(e) => {
                     console.log("Date input raw value:", e.target.value);
