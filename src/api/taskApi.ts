@@ -38,7 +38,7 @@ export const getTasks = async (): Promise<Task[]> => {
   try {
     const response = await fetch(`${API_BASE_URL}/tasks`);
     const data = await handleResponse<any[]>(response);
-    return data.map(parseDateFromApi);
+    return (data || []).map(parseDateFromApi);
   } catch (error) {
     console.error('Error fetching tasks:', error);
     throw error;
